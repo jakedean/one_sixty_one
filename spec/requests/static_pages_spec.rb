@@ -7,7 +7,9 @@ describe "StaticPages" do
     before {visit root_path}
 
     its(:source) { should have_selector('p', text: '161') }
-    its(:source) { should have_selector('title', text: full_title('Home')) }
+    its(:source) { should have_selector('title', text: full_title('Home')) } 
+    its(:source) { should have_link('About') }
+
   end
 
   describe "about page" do
@@ -15,6 +17,7 @@ describe "StaticPages" do
 
     its(:source) { should have_content('About') }
     its(:source) { should have_selector('title', text: full_title('About')) }
+    its(:source) { should have_link('Home') }
   end  
 
 end
