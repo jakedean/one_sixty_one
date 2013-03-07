@@ -1,8 +1,25 @@
 OneSixtyOne::Application.routes.draw do
+  get "sessions/new"
+
+  get "items/new"
+
+  get "schools/new"
+
   root to: "static_pages#home"
-  resources :users
+   
+  resources :schools do
+    resources :users, :items
+  end
   
-  match '/about', to: 'static_pages#about'
+  resources :items do
+    resources :reactions
+  end
+
+  resources :relationships, only: [:create, :destroy]
+  
+  resources :sessions, only: [:new, :create, :destroy]
+
+  match '/about',  to: 'static_pages#about'
   match '/signup', to: 'users#new'
 
   # The priority is based upon order of creation:
