@@ -10,6 +10,8 @@
 
 class School < ActiveRecord::Base
   attr_accessible :name
+  has_many :users
+  has_many :items
   
   before_save { |school| school.name = school.name.titleize }
 

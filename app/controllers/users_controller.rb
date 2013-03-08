@@ -6,22 +6,22 @@ class UsersController < ApplicationController
   end
 
   def index
-  	@school = School.find(params[:id])
-  	@users = @school.User.paginate(page: params[:page])
+  	@school = School.find(params[:school_id])
+  	@users = @school.users.paginate(page: params[:page])
   end
 
   def show
   	@user = User.find(params[:id])
-  	@items = @user.items.paginate(page: params[:page])
   end
 
   def create
   	@user = User.find(params[:user])
   	if @user.save
-  	  sign_in @user
+  	  #sign_in @user
   	  flash[:success] = 'Welcome to the app!'
-  	  redirect_to @user
+  	  redirect_to school_users_path(@school)
     else
+      flash[:error] = "Make sure you list the full name"
       render 'new'
     end
   end

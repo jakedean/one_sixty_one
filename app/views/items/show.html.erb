@@ -1,0 +1,14 @@
+<% provide(:title, "content") %>
+
+<div class="center hero-unit">
+  <h1><%=@item.content%></h1>
+    
+</div>
+
+<div class="center hero-unit">
+  <h1><% @reactions.each do |c| %></h1>
+  <h1><%= link_to c.comment %>
+  	<% end %>
+    
+</div>
+<p>Find me in app/views/users/show.html.erb</p>

@@ -11,13 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130307171116) do
+ActiveRecord::Schema.define(:version => 20130307235044) do
 
   create_table "items", :force => true do |t|
     t.string   "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "school_id"
   end
+
+  create_table "reactions", :force => true do |t|
+    t.string   "comment"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "item_id"
+  end
+
+  add_index "reactions", ["comment"], :name => "index_reactions_on_comment"
 
   create_table "schools", :force => true do |t|
     t.string   "name"
@@ -33,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20130307171116) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
+    t.integer  "school_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

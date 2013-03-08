@@ -11,6 +11,9 @@
 class Item < ActiveRecord::Base
   attr_accessible :content
 
+  has_many :reactions
+  belongs_to :school
+
   validates :content, presence: true, length: { maximum: 140 }
 
 end

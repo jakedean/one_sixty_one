@@ -1,7 +1,46 @@
 <% provide(:title, 'Sign up') %>
 
 <div class="center hero-unit">
-  <h1>Sign up</h1>
+    <h1>Step 2.</h1>
+  <h1>Give us just enough info to log you in.  No more, we promise.</h1>
     
 </div>
-<p>Find me in app/views/users/new.html.erb</p>
+
+<% if @user.errors.any? %>
+   <div id="error_explanation">
+    <div class="alert alert-error">
+      The form contains <%= pluralize(@user.errors.count, "error") %>.
+    </div>
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<div class="row">
+	<div class="span6 offset6">
+		<%= form_for [:school, @user] do |f| %>
+
+		  <%= f.label :name %>
+		  <%= f.text_field :name %>
+
+		  <%= f.label :email %>
+		  <%= f.text_field :email %>
+
+		  <%= f.label :password %>
+		  <%= f.text_field :password %>
+
+		  <%= f.label :password_confirmation, "Confirmation" %>
+		  <%= f.text_field :password_confirmation %></br>
+
+		  <div class="container"></br>
+
+		 <%= f.submit "Create my account!",  class: "btn btn-large btn-primary" %>
+		  </div>
+		 <% end %>
+	</div>
+</div>
+
+
+

@@ -1,8 +1,13 @@
 class ItemsController < ApplicationController
   
   def index 
-  	@school = School.find(params[:id])
-  	@items = @school.Item.paginate(page: params[:page])
+  	@school = School.find(params[:school_id])
+  	@items = @school.items.paginate(page: params[:page])
+  end
+
+  def show
+    @item = Item.find(params[:id])
+    @reactions = @item.reactions.paginate(page: params[:page])
   end
 
   def create

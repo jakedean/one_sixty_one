@@ -1,0 +1,14 @@
+
+<div class="center hero-unit">
+  <h1><%=@school.name%></h1>
+    
+</div>
+
+
+<div class="center hero-unit">
+<% @items.each do |item| %>
+
+<h1><%= link_to item.content, school_item_path(@school, item) %></h1>
+
+<% end %>
+</div>

@@ -47,6 +47,10 @@ textarea {
 .center h1 {
   margin-bottom: 10px;
 }
+.left {
+  text-align: left;
+  margin-left: 30px;
+}
 
 /* typography */
 
@@ -160,3 +164,88 @@ p {
   @include box_sizing;
 }
 
+
+/* sidebar */
+
+aside {
+  section {
+    margin-top: 60px;
+    margin-left: 20px;
+    padding: 10px 0;
+    border-top: 1px solid $grayLighter;
+    &:first-child {
+      border: 0;
+      padding-top: 0;
+    }
+    span {
+      display: block;
+      margin-bottom: 3px;
+      line-height: 1;
+    }
+    h1 {
+      font-size: 1.7em;
+      text-align: left;
+      letter-spacing: -1px;
+      margin-bottom: 3px;
+      margin-top: 10px;
+    }
+  }
+}
+
+.gravatar {
+  float: left;
+  margin-right: 10px;
+}
+
+
+ul.ui-autocomplete {
+  position: absolute;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: solid 1px #999;
+  cursor: default;
+  li {
+    background-color: #FFF;
+    border-top: solid 1px #DDD;
+    margin: 0;
+    padding: 0;
+    a {
+      color: #000;
+      display: block;
+      padding: 3px;
+    }
+    a.ui-state-hover, a.ui-state-active {
+      background-color: #FFFCB2;
+    }
+  }
+}
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+#error_explanation {
+  color: #f00;
+    margin-left: 40px;
+    margin-right: 40px;
+  ul {
+    list-style: none;
+
+  }
+}
+
+.field_with_errors {
+  @extend .control-group;
+  @extend .error;
+ }
