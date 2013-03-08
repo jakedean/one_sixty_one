@@ -15,13 +15,14 @@ class UsersController < ApplicationController
   end
 
   def create
-  	@user = User.find(params[:user])
+  	@school = School.find(params[:school_id])
+  	@user = User.new(params[:user])
   	if @user.save
+  	  @school.users << @user
   	  #sign_in @user
   	  flash[:success] = 'Welcome to the app!'
-  	  redirect_to school_users_path(@school)
+  	  redirect_to school_user_path(@school, @user)
     else
-      flash[:error] = "Make sure you list the full name"
       render 'new'
     end
   end

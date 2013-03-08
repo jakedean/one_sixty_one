@@ -15,10 +15,9 @@ class SchoolsController < ApplicationController
   def create 
   	@school = School.find_or_create_by_name(params[:school][:name])
   	if @school.save
-  		flash[:success] = "Your school was added!"
+  		flash[:success] = "Your school was selected!"
   		redirect_to new_school_user_path(@school)
   	else
-      flash[:error] = "Make sure you list the full name"
   		render 'new'
   	end
   end

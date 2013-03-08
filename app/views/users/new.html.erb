@@ -6,21 +6,12 @@
     
 </div>
 
-<% if @user.errors.any? %>
-   <div id="error_explanation">
-    <div class="alert alert-error">
-      The form contains <%= pluralize(@user.errors.count, "error") %>.
-    </div>
-    <ul>
-    <% @user.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= render 'shared/flashes' %>
+
 <div class="row">
 	<div class="span6 offset6">
 		<%= form_for [:school, @user] do |f| %>
+          <%= render 'shared/error_messages', object: f.object %>
 
 		  <%= f.label :name %>
 		  <%= f.text_field :name %>

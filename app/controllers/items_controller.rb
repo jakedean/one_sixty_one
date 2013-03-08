@@ -11,10 +11,13 @@ class ItemsController < ApplicationController
   end
 
   def create
+    @items = @school.items.paginate(page: params[:page])
+    @school = School.find(params[:school_id])
     @item = current_user.items.build(params[:item])
     if @item.save
+      @items << @item
     	flash[:success] = "We added it!"
-    	redirect_to(items_url)
+    	redirect_to school_items_path(@school, @items)
     else
     	render 'index'
     end

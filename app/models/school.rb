@@ -16,6 +16,6 @@ class School < ActiveRecord::Base
   before_save { |school| school.name = school.name.titleize }
 
   COLLEGE = /(.*university.*|.*institute.*|.*college.*)/i
-  validates :name, presence: true, length: { in: 8..50 }, format: { with: COLLEGE },
+  validates :name, presence: true, length: { in: 8..50 }, format: { with: COLLEGE, message: 'is not valid, make sure you use the full name of your school.' },
                   uniqueness: { case_sensative: false }
 end

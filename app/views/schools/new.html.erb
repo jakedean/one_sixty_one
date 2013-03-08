@@ -5,27 +5,18 @@
   <h1>Choose your school.</h1>
  </div>
 
- <% if @school.errors.any? %>
-   <div id="error_explanation">
-    <div class="alert alert-error">
-      The form contains <%= pluralize(@school.errors.count, "error") %>.
-    </div>
-    <ul>
-    <% @school.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+ 
 
 <div class="row">
-	<div class="span6 offset3">
+	<div class="span6 offset6">
 		<%= form_for @school do |f| %>
-          
+
+            <%= render 'shared/error_messages', object: f.object %>
+            
           	<%= f.label :name, "School" %>
 		    <%= f.text_field :name, data: {autocomplete_source: schools_path} %>
           
-		<div class='container'>
+		<div class='container'></br>
 
 		 <%= f.submit "Select My School!",  class: "btn btn-large btn-primary" %>
 		</div>
