@@ -1,0 +1,5 @@
+<%= form_for(current_user.wants.build(item_id: @item.id))  do |f| %>
+
+  <div><%= f.hidden_field :item_id %></div>
+  <%= f.submit "Add", class: 'btn btn-large btn-primary' %>
+  <% end %>

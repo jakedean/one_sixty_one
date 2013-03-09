@@ -8,6 +8,8 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  password_digest :string(255)
+#  school_id       :integer
+#  remember_token  :string(255)
 #
 
 require 'spec_helper'

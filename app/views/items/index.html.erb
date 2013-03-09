@@ -4,23 +4,18 @@
     
 </div>
 
-<div class="row">
-	<div class="span8 offset4">
-		<%= form_for @items, url: { action: :create } do |f| %>
-		<%= render 'shared/error_messages', object: f.object %>
+<%= render 'shared/flashes' %>
 
-		<%= f.label :content %>
-		<%= f.text_field :content %>
-
-		<%= f.submit "Add to the list", class: 'btn btn-large btn-primary' %>
-		<% end %>
-	</div>
-</div>
+<div class='row'>
+      	<div class='span4 offset8'>
+          <%= link_to "Add to list!", new_school_user_item_path(@school, current_user), class: "btn btn-large btn-primary" %>
+        </div>
+ </div>
 
 <div class="center hero-unit">
-<% @items.each do |item| %>
-
-<h1><%= link_to item.content, school_item_path(@school, item) %></h1>
-
-<% end %>
+  <% @items.desc.each do |item| %>
+    <p><% me = User.find(item.user_id) %><p>
+     <p><%= me.email %><p>	<p>This item has <%= pluralize(item.counter, "vote") %></p>
+    <h1><%= link_to item.content, school_user_item_path(@school, @user, item) %></h1>
+  <% end %>
 </div>

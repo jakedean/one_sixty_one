@@ -1,2 +1,19 @@
-<h1>Items#new</h1>
-<p>Find me in app/views/items/new.html.erb</p>
+<% provide(:title, "New Item") %>
+
+<div class='center hero-unit'>
+  <h1>Add your two cents to the list</h1>
+</div>
+
+<%= render 'shared/flashes' %>
+
+<div class="span8 offset4">
+		<%= form_for [@school, @user, @item] do |f| %>
+		<%= render 'shared/error_messages', object: f.object %>
+
+		<%= f.label :content %>
+		<%= f.text_field :content %>
+
+		<%= f.submit "Add to the list", class: 'btn btn-large btn-primary' %>
+		<% end %>
+	</div>
+</div>

@@ -3,13 +3,15 @@
 <div class="center hero-unit">
   <h1>Welcome to the 161 App.  You finally have a say in the matter.</h1>
  </div>
+      <% unless signed_in? %>
       <div class='row'>
       	<div class='span4 offset8'>
           <%= link_to "Sign me up!", new_school_path, class: "btn btn-large btn-primary" %>
         </div>
       <div class='span4 offset8'></br>
       
-        <%= link_to "Log me in!", "#", class: "btn btn-primary btn-large" %>
+        <%= link_to "Log me in!", signin_path, class: "btn btn-primary btn-large" %>
       </div>
+      <% end %>
   </div>
     

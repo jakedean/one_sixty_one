@@ -12,5 +12,13 @@
   </aside>
 </div>
 
+
+  <div class="center hero-unit">
+  <% @wants.each do |item| %>
+    <p><% my_wants = Item.find(item.item_id) %><p>
+     <p><%= my_wants.content %><p>
+  <% end %>
+</div>
+
 <p>Find me in app/views/users/show.html.erb</p>
 

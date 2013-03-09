@@ -11,13 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130307235044) do
+ActiveRecord::Schema.define(:version => 20130309221545) do
 
   create_table "items", :force => true do |t|
     t.string   "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "user_id"
     t.integer  "school_id"
+    t.integer  "counter",    :default => 0
+    t.integer  "voters"
   end
 
   create_table "reactions", :force => true do |t|
@@ -25,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20130307235044) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "item_id"
+    t.integer  "user_id"
   end
 
   add_index "reactions", ["comment"], :name => "index_reactions_on_comment"
@@ -43,9 +47,22 @@ ActiveRecord::Schema.define(:version => 20130307235044) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
+    t.string   "remember_token"
     t.integer  "school_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
+  add_index "users", ["school_id"], :name => "index_users_on_school_id"
+
+  create_table "wants", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "item_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "wants", ["item_id"], :name => "index_wants_on_item_id"
+  add_index "wants", ["user_id"], :name => "index_wants_on_user_id"
 
 end

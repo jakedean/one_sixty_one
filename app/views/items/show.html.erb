@@ -1,14 +1,30 @@
 <% provide(:title, "content") %>
 
 <div class="center hero-unit">
+  <%= render 'add_form' if signed_in? %>
+  <%= render 'plus_form' if signed_in? %>
   <h1><%=@item.content%></h1>
     
 </div>
 
+<%= render 'shared/flashes' %>
+
 <div class="center hero-unit">
-  <h1><% @reactions.each do |c| %></h1>
-  <h1><%= link_to c.comment %>
+  <% @item.reactions.each do |c| %>
+  <p><% me = User.find(c.user_id) %></p>
+  <p><%= me.email %></p>
+  <h1><%= c.comment %></h1>
   	<% end %>
     
 </div>
-<p>Find me in app/views/users/show.html.erb</p>
+<div class="span8 offset4">
+		<%= form_for [@item, @reaction] do |f| %>
+		<%= render 'shared/error_messages', object: f.object %>
+
+		<%= f.label :comment %>
+		<%= f.text_field :comment %>
+
+		<%= f.submit "Add your comment!", class: 'btn btn-large btn-primary' %>
+		<% end %>
+	</div>
+</div>

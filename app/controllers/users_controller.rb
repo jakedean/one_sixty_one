@@ -12,14 +12,15 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
+    @school = School.find(params[:school_id])
+    @wants = @user.wants
   end
 
   def create
   	@school = School.find(params[:school_id])
-  	@user = User.new(params[:user])
+  	@user = @school.users.new(params[:user])
   	if @user.save
-  	  @school.users << @user
-  	  #sign_in @user
+  	  sign_in @user
   	  flash[:success] = 'Welcome to the app!'
   	  redirect_to school_user_path(@school, @user)
     else

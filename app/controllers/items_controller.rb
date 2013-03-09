@@ -2,24 +2,49 @@ class ItemsController < ApplicationController
   
   def index 
   	@school = School.find(params[:school_id])
-  	@items = @school.items.paginate(page: params[:page])
+    @user = User.find(params[:user_id])
+    @users = @school.users
+  	@items = Item.where('school_id = ?', @school.id)
+          
+  end
+
+  def new
+    @school = School.find(params[:school_id])
+    @user = User.find(params[:user_id])
+    @item = @user.items.new
   end
 
   def show
     @item = Item.find(params[:id])
+    @school = School.find(params[:school_id])
+    @want = Want.new
     @reactions = @item.reactions.paginate(page: params[:page])
+    @reaction = Reaction.new
   end
 
   def create
-    @items = @school.items.paginate(page: params[:page])
     @school = School.find(params[:school_id])
-    @item = current_user.items.build(params[:item])
+    @user = User.find(params[:user_id])
+    @users = @school.users
+    @item = @user.items.build(params[:item])
+    @item.school_id = @school.id
     if @item.save
-      @items << @item
     	flash[:success] = "We added it!"
-    	redirect_to school_items_path(@school, @items)
+    	redirect_to school_user_items_path(@school, @user)
     else
-    	render 'index'
+    	render 'new'
+    end
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    submission_hash = {counter: @item.plus_one}
+    @item.update_attributes(submission_hash)
+    if @item.update_attributes(submission_hash)
+      flash[:success] = 'Awesome, thanks for the vote'
+      redirect_to :back
+    else
+      redirect_to :back
     end
   end
 
