@@ -18,6 +18,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @school = School.find(params[:school_id])
     @want = Want.new
+    @vote = Vote.new
     @reactions = @item.reactions.paginate(page: params[:page])
     @reaction = Reaction.new
   end
@@ -36,22 +37,26 @@ class ItemsController < ApplicationController
     end
   end
 
-  def update
-    @item = Item.find(params[:id])
-    submission_hash = {counter: @item.plus_one}
-    @item.update_attributes(submission_hash)
-    if @item.update_attributes(submission_hash)
-      flash[:success] = 'Awesome, thanks for the vote'
-      redirect_to :back
-    else
-      redirect_to :back
-    end
-  end
+  #def update
+   # @item = Item.find(params[:id])
+    #submission_hash = {counter: @item.plus_one}
+    #@item.update_attributes(submission_hash)
+    #if @item.update_attributes(submission_hash)
+     # flash[:success] = 'Awesome, thanks for the vote'
+      #redirect_to :back
+    #else
+     # flash[:error] = 'You already voted for this one'
+      #redirect_to :back
+    #end
+  #end
 
   def destroy
     @item.destroy
     flash[:success] = "Boom, destroyed!"
     redirect_to(items_url)
   end
+
+  
+
 
 end

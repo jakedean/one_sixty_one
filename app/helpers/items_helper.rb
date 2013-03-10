@@ -8,5 +8,6 @@ module ItemsHelper
 
   def add_to_voters
   	current_user.id >> self.voters
-  end 
+  end
+   
 end

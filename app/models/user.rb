@@ -19,7 +19,12 @@ class User < ActiveRecord::Base
   has_many :items
   has_many :reactions
   has_many :wants, dependent: :destroy
-  has_many :desires, through: :wants, source: :item
+  has_many :personal_items, through: :wants, source: :item
+  has_many :votes, dependent: :destroy
+  has_many :relationships, foreign_key: 'follower_id', dependent: :destroy
+  has_many :followed_users, through: :relationships, source: :followed
+  has_many :reverse_relationships, foreign_key: 'followed_id', class_name: "Relationship", dependent: :destroy
+  has_many :followers, through: :reverse_relationships, source: :follower
 
   before_save { |user| user.email = user.email.downcase }
   before_save :create_remember_token
@@ -38,9 +43,27 @@ class User < ActiveRecord::Base
     self.wants.create(item_id: item.id)
   end
 
+  def add_vote(item)
+    self.votes.create(item_id: item.id)
+  end
+
+  def following?(other_user)
+    self.relationships.find_by_followed_id(other_user.id)
+  end
+
+  def follow!(other_user)
+    self.relationships.create(followed_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+    self.relationships.find_by_followed_id(other_user.id).destroy
+  end
+
    private
 
    def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64
    end
+
+
 end

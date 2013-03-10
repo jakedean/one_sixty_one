@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130309221545) do
+ActiveRecord::Schema.define(:version => 20130310180513) do
 
   create_table "items", :force => true do |t|
     t.string   "content"
@@ -32,6 +32,17 @@ ActiveRecord::Schema.define(:version => 20130309221545) do
   end
 
   add_index "reactions", ["comment"], :name => "index_reactions_on_comment"
+
+  create_table "relationships", :force => true do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "relationships", ["followed_id"], :name => "index_relationships_on_followed_id"
+  add_index "relationships", ["follower_id", "followed_id"], :name => "index_relationships_on_follower_id_and_followed_id", :unique => true
+  add_index "relationships", ["follower_id"], :name => "index_relationships_on_follower_id"
 
   create_table "schools", :force => true do |t|
     t.string   "name"
@@ -55,14 +66,27 @@ ActiveRecord::Schema.define(:version => 20130309221545) do
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
   add_index "users", ["school_id"], :name => "index_users_on_school_id"
 
-  create_table "wants", :force => true do |t|
+  create_table "votes", :force => true do |t|
     t.integer  "user_id"
-    t.string   "item_id"
+    t.integer  "item_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
+  add_index "votes", ["item_id"], :name => "index_votes_on_item_id"
+  add_index "votes", ["user_id", "item_id"], :name => "index_votes_on_user_id_and_item_id", :unique => true
+  add_index "votes", ["user_id"], :name => "index_votes_on_user_id"
+
+  create_table "wants", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "item_id"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "status",     :default => 0
+  end
+
   add_index "wants", ["item_id"], :name => "index_wants_on_item_id"
+  add_index "wants", ["user_id", "item_id"], :name => "index_wants_on_user_id_and_item_id", :unique => true
   add_index "wants", ["user_id"], :name => "index_wants_on_user_id"
 
 end

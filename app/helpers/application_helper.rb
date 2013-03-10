@@ -8,4 +8,11 @@ module ApplicationHelper
 			return "#{base_title} | #{title}"
 		end
 	end
+
+	def plus_one
+  	self.counter += 1
+  	self.save
+  end
+
+  
 end

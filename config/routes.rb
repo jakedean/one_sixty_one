@@ -4,6 +4,9 @@ OneSixtyOne::Application.routes.draw do
    
   resources :schools do
     resources :users do
+      member do
+        get :following, :followers, :personal_item
+      end
       resources :items
     end
   end
@@ -13,7 +16,8 @@ OneSixtyOne::Application.routes.draw do
   end
 
   resources :relationships, only: [:create, :destroy]
-  resources :wants, only: [:create, :destroy]
+  resources :wants, only: [:create, :update, :destroy]
+  resources :votes, only: [:create]
   
   resources :sessions, only: [:new, :create, :destroy]
 
