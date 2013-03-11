@@ -7,6 +7,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  item_id    :integer
+#  user_id    :integer
 #
 
 require 'spec_helper'

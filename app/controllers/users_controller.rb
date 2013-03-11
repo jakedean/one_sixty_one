@@ -7,7 +7,11 @@ class UsersController < ApplicationController
 
   def index
   	@school = School.find(params[:school_id])
-  	@users = @school.users.paginate(page: params[:page])
+    if params[:search]
+      @users = @school.users.find(:all, conditions: ["name like ?", "%#{params[:search]}%"])
+    else
+  	  @users = @school.users.paginate(page: params[:page])
+    end
   end
 
   def show
@@ -72,6 +76,8 @@ end
     @school = School.find(params[:school_id])
     @want = Want.find(params[:format])
     @personal_item = Item.find(@want.item_id)
+    @personal = Personal.new
+    
   end
 
 end

@@ -5,7 +5,7 @@
   	<%= render 'shared/flashes' %>
     <section>
       <h1>
-        <%= gravatar_for @user %>
+        <%= image_tag @user.picture.url %>
         <%= @user.name %>
         <%= render 'follow_form' %>
       </h1>
@@ -23,11 +23,7 @@
      <p><%= link_to "#{my_wants.content}", personal_item_school_user_path(@school, @user, item) %><p>
 
      <% if item.status == 0 %>
-        <%= form_for(item) do |f| %>
-
-        <%= f.hidden_field :status %>
-        <%= f.submit "I did it", class: "btn btn-large btn-primary" %>
-        <% end %>
+        
         <p><%= "Not done" %> </p>
        <% else %>
        <p><%= "Done!" %> </p>

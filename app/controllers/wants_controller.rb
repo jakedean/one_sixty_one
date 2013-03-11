@@ -15,10 +15,13 @@ class WantsController < ApplicationController
 
 	def update
 		@want = Want.find(params[:id])
-		hash = { status: 1 }
-		@want.update_attributes(hash)
-		flash[:success] = "Nice work!"
+		if @want.update_attributes(params[:want])
+		flash[:success] = "Awesome!"
 		redirect_to :back
+	    else
+	    	flash[:error] = "That did not work"
+	    	redirect_to :back
+	    end
 	end
 
 	def show

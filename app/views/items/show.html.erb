@@ -1,8 +1,8 @@
 <% provide(:title, "content") %>
 
 <div class="center hero-unit">
-  <%= render 'add_form' if signed_in? %>
-  <%= render 'plus_form' if signed_in? %>
+  <%= render 'add_form' unless current_user.wants.include?(@item) %>
+  <%= render 'plus_form' unless current_user.votes.include?(@item) %>
   <h1><%=@item.content%></h1>
     
 </div>

@@ -7,6 +7,9 @@ gem 'gravatar_image_tag', '1.1.3'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
+gem "paperclip", "~> 3.0"
+gem "aws-sdk", "~> 1.8.4"
+gem "rmagick", "~> 2.13.2"
 
 group :development do
   gem 'sqlite3', '1.3.5'

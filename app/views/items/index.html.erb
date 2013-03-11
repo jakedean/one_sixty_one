@@ -15,7 +15,7 @@
 <div class="center hero-unit">
   <% @items.desc.each do |item| %>
     <p><% me = User.find(item.user_id) %><p>
-     <p><%= me.email %><p>	<p>This item has <%= pluralize(item.counter, "vote") %></p>
+     <p>Posted By: <%= me.email %> <%= pluralize(item.counter, "vote") %></p>
     <h1><%= link_to item.content, school_user_item_path(@school, @user, item) %></h1>
   <% end %>
 </div>

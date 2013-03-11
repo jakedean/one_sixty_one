@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130310180513) do
+ActiveRecord::Schema.define(:version => 20130311220009) do
 
   create_table "items", :force => true do |t|
     t.string   "content"
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(:version => 20130310180513) do
     t.integer  "counter",    :default => 0
     t.integer  "voters"
   end
+
+  create_table "personals", :force => true do |t|
+    t.integer  "want_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "content"
+    t.integer  "user_id"
+  end
+
+  add_index "personals", ["want_id"], :name => "index_personals_on_want_id"
 
   create_table "reactions", :force => true do |t|
     t.string   "comment"
@@ -55,11 +65,15 @@ ActiveRecord::Schema.define(:version => 20130310180513) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
     t.string   "password_digest"
     t.string   "remember_token"
     t.integer  "school_id"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -80,9 +94,13 @@ ActiveRecord::Schema.define(:version => 20130310180513) do
   create_table "wants", :force => true do |t|
     t.integer  "user_id"
     t.string   "item_id"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-    t.integer  "status",     :default => 0
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.integer  "status",               :default => 0
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
   end
 
   add_index "wants", ["item_id"], :name => "index_wants_on_item_id"

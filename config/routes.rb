@@ -16,8 +16,11 @@ OneSixtyOne::Application.routes.draw do
   end
 
   resources :relationships, only: [:create, :destroy]
-  resources :wants, only: [:create, :update, :destroy]
+  resources :wants, only: [:create, :update, :destroy] do
+    resources :personals, only: [:create]
+  end
   resources :votes, only: [:create]
+  resources :personals, only: [:create]
   
   resources :sessions, only: [:new, :create, :destroy]
 
