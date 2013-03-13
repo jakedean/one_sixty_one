@@ -17,7 +17,7 @@ describe Personal do
     let!(:school) { FactoryGirl.create(:school) }
     let!(:user) { FactoryGirl.create(:user) }
     let!(:item) { user.items.create(content: "This is my item!", school_id: school.id) }
-	let!(:want) { user.wants.create(item_id: item.id) }
+	  let!(:want) { user.wants.create(item_id: item.id) }
 
 	before do
 	  @personal = want.personals.build(content: "This is the personal comment!", user_id: user.id) 

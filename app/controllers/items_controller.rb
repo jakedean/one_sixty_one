@@ -1,4 +1,7 @@
 class ItemsController < ApplicationController
+
+
+  before_filter :signed_in_user
   
   def index 
   	@school = School.find(params[:school_id])

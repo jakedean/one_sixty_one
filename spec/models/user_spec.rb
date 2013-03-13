@@ -19,8 +19,8 @@
 require 'spec_helper'
 
 describe User do
-
-  before { @user = User.new(name: "Jake Dean", email: "jdean@example.com",
+  let!(:school) { FactoryGirl.create(:school) }
+  before { @user = school.users.build(name: "Jake Dean", email: "jdean@example.com",
   	                        password: 'foobar', password_confirmation: 'foobar') }
 
   subject { @user }
@@ -151,10 +151,10 @@ describe User do
 
   describe "personal items being added to users page" do
     before { @user.save }
-    let(:new_item) { FactoryGirl.create(:item, user_id: @user.id)}
-    let!(:newer_item) { FactoryGirl.create(:item) }
+    let(:new_item) { @user.items.create(content: "first item", school_id: @user.school_id) }
+    let!(:newer_item) { @user.items.create(content: "second item", school_id: @user.school_id) }
     let!(:user_want) do
-      FactoryGirl.create(:want, user_id: @user.id, item_id: new_item.id)
+      @user.wants.create(item_id: new_item.id)
     end
     it "should have a personal item now" do
       @user.personal_items.should == [new_item]
@@ -171,9 +171,9 @@ describe User do
     end
 
     describe "adding an additional want" do
-      let!(:newer_want) do 
-        FactoryGirl.create(:want, user_id: @user.id, item_id: newer_item.id)
-      end
+      let!(:newer_want) do
+      @user.wants.create(item_id: newer_item.id)
+    end
       before { @user_wants = @user.wants << newer_want }
       it " should allow this want to go through" do
         @user.personal_items.count == 2 
@@ -185,10 +185,10 @@ describe User do
 
   describe "votes being added to an item" do
     before { @user.save }
-    let!(:new_item) { FactoryGirl.create(:item, user_id: @user.id)}
-    let!(:newer_item) { FactoryGirl.create(:item) }
+    let(:new_item) { @user.items.create(content: "first item", school_id: @user.school_id) }
+    let!(:newer_item) { @user.items.create(content: "second item", school_id: @user.school_id) }
     let!(:new_vote) do 
-      FactoryGirl.create(:vote, user_id: @user.id, item_id: new_item.id)
+      @user.votes.create(item_id: new_item.id)
     end
 
     it " should have a vote" do
@@ -205,8 +205,9 @@ describe User do
 
     describe "adding a nondup vote" do
       let!(:newer_vote) do 
-        FactoryGirl.create(:vote, user_id: @user.id, item_id: newer_item.id)
-      end
+      @user.votes.create(item_id: newer_item.id)
+    end
+
       before { @non_dup_votes = @user.votes << newer_vote }
 
       it "should allow non dup votes" do
@@ -225,8 +226,13 @@ describe User do
   #THE REACTIONS SECTION
 
   describe "reactions by a user" do
-  before { @user.save }
-  let!(:user_reaction) { FactoryGirl.create(:reaction, user_id: @user.id) }
+    before do
+      @user.save
+      @item = @user.items.build(content: "This is the item!", school_id: school.id)
+      @item.save
+    end
+
+  let!(:user_reaction) { @item.reactions.create(comment: "This is the reaction", user_id: @user.id) }
 
     it "should also have a reaction associated with the user" do
       @user.reactions.count.should == 1

@@ -7,7 +7,7 @@ OneSixtyOne::Application.routes.draw do
       member do
         get :following, :followers, :personal_item
       end
-      resources :items
+      resources :items, only: [:index, :create, :new, :edit, :show, :update]
     end
   end
   

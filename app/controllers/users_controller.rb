@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+before_filter :signed_in_user, only: [:index, :show, :create, :edit, :update, :destroy]
   def new
   	@school = School.new
   	@user = User.new

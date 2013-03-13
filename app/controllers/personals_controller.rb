@@ -1,5 +1,9 @@
 class PersonalsController < ApplicationController
 
+
+   before_filter :signed_in_user
+
+   
 	def create
 		@want = Want.find(params[:want_id])
 		@personal = @want.personals.build(params[:personal])

@@ -1,9 +1,12 @@
 class SchoolsController < ApplicationController
+
+  before_filter :signed_in_user, only: [:show, :create, :destroy]
   def new
   	@school = School.new
   end
 
   def index
+    #Here have to render signin if it is an html request!!!
     @schools = School.order(:name).where("name like ?", "%#{params[:term]}%")
     render json: @schools.map(&:name)
   end

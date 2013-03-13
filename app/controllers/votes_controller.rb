@@ -1,5 +1,7 @@
 class VotesController < ApplicationController
 
+
+  before_filter :signed_in_user
 	def create 
 		@school = School.find(current_user.school_id)
 		@item = Item.find(params[:item_id])
