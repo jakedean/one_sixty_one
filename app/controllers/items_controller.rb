@@ -24,11 +24,9 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @school = School.find(params[:school_id])
-    @user = User.find(params[:user_id])
-    @users = @school.users
+    @school = School.find(params[:item][:school_id])
+    @user = current_user
     @item = @user.items.build(params[:item])
-    @item.school_id = @school.id
     if @item.save
     	flash[:success] = "We added it!"
     	redirect_to school_user_items_path(@school, @user)

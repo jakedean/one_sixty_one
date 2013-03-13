@@ -47,11 +47,13 @@
 </div>
 
 <div class="span8 offset4">
-		<%= form_for [@want, @personal], html: { multipart: true } do |f| %>
+		<%= form_for [@want, @want.personals.build(user_id: current_user.id)] do |f| %>
 		<%= render 'shared/error_messages', object: f.object %>
 
 		<%= f.label :content %>
 		<%= f.text_field :content %>
+
+		<%= f.hidden_field :user_id %>
 
 		<%= f.submit "Add your comment!", class: 'btn btn-large btn-primary' %>
 		<% end %>

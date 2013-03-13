@@ -2,14 +2,18 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  name            :string(255)
-#  email           :string(255)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  password_digest :string(255)
-#  school_id       :integer
-#  remember_token  :string(255)
+#  id                   :integer          not null, primary key
+#  name                 :string(255)
+#  email                :string(255)
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  password_digest      :string(255)
+#  remember_token       :string(255)
+#  school_id            :integer
+#  picture_file_name    :string(255)
+#  picture_content_type :string(255)
+#  picture_file_size    :integer
+#  picture_updated_at   :datetime
 #
 
 require 'spec_helper'
@@ -42,6 +46,10 @@ describe User do
   it { should respond_to(:follow!) }
   it { should respond_to(:following?) }
   it { should respond_to(:unfollow!) }
+  it { should respond_to(:picture_file_name) }
+  it { should respond_to(:picture_updated_at) }
+  it { should respond_to(:picture_file_size) }
+  it { should respond_to(:picture_content_type) }
   
   it { should be_valid }
 

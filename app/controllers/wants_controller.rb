@@ -3,8 +3,7 @@ class WantsController < ApplicationController
 	def create
 		@school = School.find(current_user.school_id)
 		@item = Item.find(params[:item_id])
-		@want = current_user.wants.build
-		@want.item = @item
+		@want = current_user.wants.build(params[:want])
         if @want.save
           flash[:success] = "You added that item to your list"
 		  redirect_to school_user_path(@school, current_user)

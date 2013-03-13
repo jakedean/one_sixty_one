@@ -8,8 +8,7 @@ class ReactionsController < ApplicationController
 	def create
 		@user = current_user
 		@item = Item.find(params[:item_id])
-		@reaction = @item.reactions.new(params[:reaction])
-		@reaction.user = current_user
+		@reaction = @item.reactions.build(params[:reaction])
 		if @reaction.save
 			flash[:success] = "We added your comment"
 			redirect_to :back

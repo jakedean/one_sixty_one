@@ -1,4 +1,4 @@
-<%= form_for [@item, @vote] do |f| %>
+<%= form_for [@item, current_user.votes.build(item_id: @item.id)] do |f| %>
 
   <div><%= f.hidden_field :item_id %></div>
   <%= f.submit "+1", class: 'btn btn-large btn-primary' %>

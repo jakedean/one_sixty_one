@@ -22,7 +22,7 @@ class UsersController < ApplicationController
 
   def create
   	@school = School.find(params[:school_id])
-  	@user = @school.users.new(params[:user])
+  	@user = @school.users.build(params[:user])
   	if @user.save
   	  sign_in @user
   	  flash[:success] = 'Welcome to the app!'

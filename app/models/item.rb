@@ -16,6 +16,7 @@ class Item < ActiveRecord::Base
   attr_accessible :content, :counter, :school_id
 
   has_many :reactions
+  has_many :wants
   belongs_to :user
   belongs_to :school
 
