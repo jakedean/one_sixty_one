@@ -15,13 +15,15 @@
 #
 
 class Want < ActiveRecord::Base
-  attr_accessible :item_id, :user_id, :status, :picture
+  attr_accessible :status, :picture, :item_id
 
   belongs_to :user
   belongs_to :item
   has_many :personals
   has_attached_file :picture, styles: { medium: "400x400>" }, default_url: "missing.png"
   validates_uniqueness_of :user_id, scope: :item_id
+  validates :user_id, presence: true
+  validates :item_id, presence: true
   #validates_attachment_presence :picture
   #validates_attachment_size :picture, less_than: 5.megabytes
   #validates_attachment_content_type :picture, content_type: ['image/jpeg', 'image/png']

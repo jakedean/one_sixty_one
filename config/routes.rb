@@ -10,16 +10,34 @@ OneSixtyOne::Application.routes.draw do
       resources :items
     end
   end
-    
+  
+
   resources :items do
     resources :reactions
   end
 
+
   resources :relationships, only: [:create, :destroy]
-  resources :wants, only: [:create, :update, :destroy] do
-    resources :personals, only: [:create]
+
+
+#I am using this to create/destroy my want so I have access to the item
+  resources :items do
+    resources :wants, only: [:create, :destroy] do
+    end
   end
-  resources :votes, only: [:create]
+
+#I am using this for adding votes so I have access to the item
+resources :items do
+    resources :votes, only: [:create] do
+    end
+  end
+
+#I am using this to update my already existing want
+  resources :wants, only: [:update] do
+      resources :personals, only: [:create]
+    end
+
+  
   resources :personals, only: [:create]
   
   resources :sessions, only: [:new, :create, :destroy]

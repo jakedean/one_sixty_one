@@ -11,10 +11,13 @@
 #
 
 class Reaction < ActiveRecord::Base
-  attr_accessible :comment
+  attr_accessible :comment, :user_id
 
   belongs_to :item
   belongs_to :user
 
-  validates :comment, presence: true, length: { maximum: 140 }
+  validates :user_id, presence: true
+  validates :item_id, presence: true
+
+  validates :comment, presence: true, length: { maximum: 255 }
 end

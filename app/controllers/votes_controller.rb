@@ -2,12 +2,12 @@ class VotesController < ApplicationController
 
 	def create 
 		@school = School.find(current_user.school_id)
-		@item = Item.find(params[:vote][:item_id])
-		@vote = current_user.add_vote(@item)
-		#current_user.add_vote(@vote)
+		@item = Item.find(params[:item_id])
+		@vote = current_user.votes.build
+		@vote.item_id = @item.id
 		if @vote.save
-	      submission_hash = {counter: @item.plus_one}
-          @item.update_attributes(submission_hash)
+		  updated_hash = { counter: @item.plus_one}
+	      @item.update_attributes(updated_hash)
 		  flash[:success] = "Thanks for the vote"
 		  redirect_to school_user_items_path(@school, current_user)
 	    else

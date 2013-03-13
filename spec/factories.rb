@@ -4,10 +4,6 @@ FactoryGirl.define do
   	sequence(:email) { |n| "Person#{n}@example.com" }
   	password "foobar"
   	password_confirmation "foobar"
-
-  factory :admin do
-  	admin true
-  end
  end
 
  factory :school do
@@ -15,11 +11,24 @@ FactoryGirl.define do
  end
 
  factory :item do
- 	content 'You should go shag in the stacks'
+ 	content 'You should go to a hockey game'
  end
 
  factory :reaction do
  	comment 'Yes it is the best thing to do'
  end
+
+ factory :want do 
+ 	status 0
+
+ end
+
+ factory :personal do
+ end
+
+ factory :vote do
+ end
  
 end
+
+

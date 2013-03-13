@@ -10,9 +10,12 @@
 #
 
 class Vote < ActiveRecord::Base
-  attr_accessible :item_id, :user_id
+
+  attr_accessible :item_id
 
   belongs_to :user
 
   validates_uniqueness_of :user_id, scope: :item_id
+  validates :user_id, presence: true
+  validates :item_id, presence: true
 end

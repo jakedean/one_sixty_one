@@ -11,9 +11,13 @@
 #
 
 class Personal < ActiveRecord::Base
-  attr_accessible :content
+  attr_accessible :content, :user_id
 
   belongs_to :want
+
+  validates :want_id, presence: true
+  validates :user_id, presence: true
+  validates :content, presence: true, length: { maximum: 255 }
 
 
   def add_personal_comment!(want)

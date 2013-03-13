@@ -27,8 +27,25 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:picture) }
+  it { should respond_to(:items) }
+  it { should respond_to(:reactions) }
+  it { should respond_to(:wants) }
+  it { should respond_to(:relationships) }
+  it { should respond_to(:reverse_relationships) }
+  it { should respond_to(:personal_items) }
+  it { should respond_to(:votes) }
+  it { should respond_to(:followers) }
+  it { should respond_to(:followed_users) }
+  it { should respond_to(:add_item) }
+  it { should respond_to(:add_vote) }
+  it { should respond_to(:follow!) }
+  it { should respond_to(:following?) }
+  it { should respond_to(:unfollow!) }
   
   it { should be_valid }
+
+#Basic Validations Here
 
  describe "when the name is not present" do
  	before { @user.name = " " }
@@ -65,6 +82,8 @@ describe User do
   		end
   	end
   end
+
+  describe "password stuff" do
 
   describe "when email address is already taken" do
   	before do
@@ -111,4 +130,128 @@ describe User do
       specify { user_for_invalid_password. should be_false }
      end
    end
+  end
+
+
+  describe "the remember_token" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }
+  end
+
+#THE PERSONAL ITEMS SECTION
+
+
+  describe "personal items being added to users page" do
+    before { @user.save }
+    let(:new_item) { FactoryGirl.create(:item, user_id: @user.id)}
+    let!(:newer_item) { FactoryGirl.create(:item) }
+    let!(:user_want) do
+      FactoryGirl.create(:want, user_id: @user.id, item_id: new_item.id)
+    end
+    it "should have a personal item now" do
+      @user.personal_items.should == [new_item]
+    end
+
+    it "should have a want count of 1" do
+      @user.wants.count.should == 1
+    end
+    describe "a duplicate wants situation" do
+      before { @user_wants = @user.wants << user_want }
+      it "should not allow duplicate wants" do
+        @user.personal_items.count == 1
+      end
+    end
+
+    describe "adding an additional want" do
+      let!(:newer_want) do 
+        FactoryGirl.create(:want, user_id: @user.id, item_id: newer_item.id)
+      end
+      before { @user_wants = @user.wants << newer_want }
+      it " should allow this want to go through" do
+        @user.personal_items.count == 2 
+      end
+    end
+  end
+
+#THE VOTES SECTION dups vs. non dups
+
+  describe "votes being added to an item" do
+    before { @user.save }
+    let!(:new_item) { FactoryGirl.create(:item, user_id: @user.id)}
+    let!(:newer_item) { FactoryGirl.create(:item) }
+    let!(:new_vote) do 
+      FactoryGirl.create(:vote, user_id: @user.id, item_id: new_item.id)
+    end
+
+    it " should have a vote" do
+      @user.votes.count.should == 1
+    end
+
+    describe "with dup votes" do
+       before { @dup_votes = @user.votes << new_vote }
+
+      it "should not allow duplicate votes" do
+        @user.votes.count.should == 1
+      end
+    end
+
+    describe "adding a nondup vote" do
+      let!(:newer_vote) do 
+        FactoryGirl.create(:vote, user_id: @user.id, item_id: newer_item.id)
+      end
+      before { @non_dup_votes = @user.votes << newer_vote }
+
+      it "should allow non dup votes" do
+        @user.votes.count.should == 2
+      end
+
+      describe "adding this newer vote again" do
+        before { @non_dup_votes = @user.votes << newer_vote }
+        it " should not allow this vote this time" do
+         @user.votes.count.should == 2
+        end
+      end 
+   end
+  end
+
+  #THE REACTIONS SECTION
+
+  describe "reactions by a user" do
+  before { @user.save }
+  let!(:user_reaction) { FactoryGirl.create(:reaction, user_id: @user.id) }
+
+    it "should also have a reaction associated with the user" do
+      @user.reactions.count.should == 1
+    end
+  end
+
+  #THE FOLLOWING/FOLLOWED SECTION
+
+
+  describe "following" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    before do
+      @user.save
+      @user.follow!(other_user)
+    end
+
+    it { should be_following(other_user) }
+    its(:followed_users) { should include(other_user) }
+
+    describe "followed user" do
+      subject { other_user }
+      its(:followers) { should include(@user) }
+    end
+
+  describe "unfollowing" do
+    before do
+      @user.unfollow!(other_user)
+    end
+
+    it { should_not be_following(other_user) }
+    its(:followed_users) { should_not include(other_user) }
+
+  end
+ end
 end
+
