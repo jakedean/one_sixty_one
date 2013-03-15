@@ -1,8 +1,7 @@
-<% provide(:title, 'Sign up') %>
+<% provide(:title, 'Edit Your Profile') %>
 
 <div class="center hero-unit">
-    <h1>Step 2.</h1>
-  <h1>Give us just enough info to log you in.  No more, we promise.</h1>
+    <h1>Edit Your Profile</h1>
     
 </div>
 
@@ -10,7 +9,7 @@
 
 <div class="row">
 	<div class="span6 offset6">
-		<%= form_for [@school, @school.users.build] do |f| %>
+		<%= form_for @user do |f| %>
           <%= render 'shared/error_messages', object: f.object %>
 
 		  <%= f.label :name %>
@@ -29,11 +28,8 @@
 
 		  <div class="container"></br>
 
-		 <%= f.submit "Create my account!",  class: "btn btn-large btn-primary" %>
+		 <%= f.submit "Update My Profile!",  class: "btn btn-large btn-primary" %>
 		  </div>
 		 <% end %>
 	</div>
 </div>
-
-
-

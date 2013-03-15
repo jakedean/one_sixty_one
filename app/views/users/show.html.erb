@@ -7,6 +7,9 @@
       <h1>
         <%= image_tag @user.picture.url %>
         <%= @user.name %>
+        <% if current_user == @user %>
+        <%= link_to "Edit My Profile", edit_user_path(@user) %>
+        <% end %>
         <%= render 'follow_form' %>
       </h1>
     </section>
@@ -20,8 +23,10 @@
   <div class="center hero-unit">
   <% @wants.each do |item| %>
     <p><% my_wants = Item.find(item.item_id) %><p>
-     <p><%= link_to "#{my_wants.content}", personal_item_school_user_path(@school, @user, item) %><p>
-
+     <p><%= link_to "#{my_wants.content}", personal_item_user_path(@user, item) %><p>
+      <% unless @user != current_user %>
+     <p><%= link_to "Delete", want_path(item), method: :delete %><p>
+      <% end %>
      <% if item.status == 0 %>
         
         <p><%= "Not done" %> </p>

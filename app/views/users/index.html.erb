@@ -16,7 +16,7 @@
 <div class="center hero-unit">
 <% @users.each do |user| %>
 
-<h1><%= link_to user.name, school_user_path(@school, user) %></h1>
+<h1><%= link_to user.name, user_path(user) %></h1>
 
 <% end %>
 </div>

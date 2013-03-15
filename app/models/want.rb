@@ -19,7 +19,7 @@ class Want < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :item
-  has_many :personals
+  has_many :personals, dependent: :destroy
   has_attached_file :picture, styles: { medium: "400x400>" }, default_url: "missing.png"
   validates_uniqueness_of :user_id, scope: :item_id
   validates :user_id, presence: true
@@ -27,5 +27,7 @@ class Want < ActiveRecord::Base
   #validates_attachment_presence :picture
   #validates_attachment_size :picture, less_than: 5.megabytes
   #validates_attachment_content_type :picture, content_type: ['image/jpeg', 'image/png']
+
+  scope :desc, order('wants.updated_at DESC')
 
 end

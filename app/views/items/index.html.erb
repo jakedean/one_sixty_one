@@ -8,14 +8,14 @@
 
 <div class='row'>
       	<div class='span4 offset8'>
-          <%= link_to "Add to list!", new_school_user_item_path(@school, current_user), class: "btn btn-large btn-primary" %>
+          <%= link_to "Add to list!", new_item_path, class: "btn btn-large btn-primary" %>
         </div>
  </div>
 
 <div class="center hero-unit">
   <% @items.desc.each do |item| %>
-    <p><% me = User.find(item.user_id) %><p>
-     <p>Posted By: <%= me.email %> <%= pluralize(item.counter, "vote") %></p>
-    <h1><%= link_to item.content, school_user_item_path(@school, @user, item) %></h1>
+  <% @user = User.find(item.user_id) %>
+     <p>Posted By: <%= @user.email %> <%= pluralize(item.counter, "vote") %></p>
+    <h1><%= link_to item.content, item_path(item) %></h1>
   <% end %>
 </div>

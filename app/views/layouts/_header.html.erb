@@ -7,9 +7,10 @@
               <li><%= link_to "Home", root_path %></li>
               <li><%= link_to "About", about_path %></li>
                 <%if signed_in? %>
-                  <li><%= link_to "My School List", school_user_items_path(@school, current_user) %></li>
-                  <li><%= link_to "Users", school_users_path(@school) %></li>
-                  <li><%= link_to "My Profile", school_user_path(@school, current_user)%></li>
+                  <li><%= link_to "My School List", school_items_path(current_user.school_id) %></li>
+                  <li><%= link_to "Users", school_users_path(current_user.school_id) %></li>
+                  <li><%= link_to "My Profile", user_path(current_user)%></li>
+                  <li><%= link_to "Recent Activity", feed_user_path(current_user) %></li>
                   <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
                 <% else %>
                   <li><%= link_to "Sign in", signin_path %></li>

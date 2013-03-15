@@ -2,18 +2,34 @@ OneSixtyOne::Application.routes.draw do
  
  root to: "static_pages#home"
    
-  resources :schools do
-    resources :users do
-      member do
-        get :following, :followers, :personal_item
+
+  resources :schools, only: [:new, :create, :index]
+
+  #Here I am using nested routes to display all of the users/items for each school and to create 
+  #a new user.
+
+  resources :schools, only: [:show] do
+    resources :users, only: [:index, :new, :create]
+  end
+
+  resources :schools, only: [:show] do
+    resources :items, only: :index
+  end 
+
+  #wont need the school to access/edit/update/delete a specific user, just going thru
+  #current_user.
+
+  resources :users, only: [:show, :edit, :update, :delete] do
+    member do
+        get :following, :followers, :personal_item, :feed
       end
-      resources :items, only: [:index, :create, :new, :edit, :show, :update]
-    end
   end
   
-
-  resources :items do
-    resources :reactions
+  #again I can get to the school and user from current_user here so i do not need nesting
+  #for items.
+  
+  resources :items, only: [:create, :new, :edit, :show, :update, :delete] do
+    resources :reactions, only: [:create, :destroy]
   end
 
 
@@ -22,26 +38,24 @@ OneSixtyOne::Application.routes.draw do
 
 #I am using this to create/destroy my want so I have access to the item
 
-  resources :items do
-    resources :wants, only: [:create, :destroy] do
+  resources :items, only: [:show] do
+    resources :wants, only: [:create] do
     end
   end
 
 #I am using this for adding votes so I have access to the item
 
-resources :items do
+resources :items, only: [:show] do
     resources :votes, only: [:create] do
     end
-  end
+end
 
 #I am using this to update my already existing want
 
-  resources :wants, only: [:update] do
+  resources :wants, only: [:update, :destroy] do
       resources :personals, only: [:create]
-    end
+  end
 
-  
-  resources :personals, only: [:create]
   
   resources :sessions, only: [:new, :create, :destroy]
 

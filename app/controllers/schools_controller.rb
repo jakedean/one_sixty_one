@@ -1,6 +1,6 @@
 class SchoolsController < ApplicationController
 
-  before_filter :signed_in_user, only: [:show, :create, :destroy]
+  before_filter :signed_in_user, only: [:show, :destroy]
   def new
   	@school = School.new
   end

@@ -5,34 +5,25 @@ class ItemsController < ApplicationController
   
   def index 
   	@school = School.find(params[:school_id])
-    @user = User.find(params[:user_id])
     @users = @school.users
-  	@items = Item.where('school_id = ?', @school.id)
+  	@items = Item.where('school_id = ?', current_user.school_id)
           
   end
 
   def new
-    @school = School.find(params[:school_id])
-    @user = User.find(params[:user_id])
-    @item = @user.items.new
   end
 
   def show
     @item = Item.find(params[:id])
-    @school = School.find(params[:school_id])
-    @want = Want.new
-    @vote = Vote.new
-    @reactions = @item.reactions.paginate(page: params[:page])
-    @reaction = Reaction.new
+    
   end
 
   def create
-    @school = School.find(params[:item][:school_id])
-    @user = current_user
-    @item = @user.items.build(params[:item])
+    @school = School.find(current_user.school_id)
+    @item = current_user.items.build(params[:item])
     if @item.save
     	flash[:success] = "We added it!"
-    	redirect_to school_user_items_path(@school, @user)
+    	redirect_to school_items_path(@school)
     else
     	render 'new'
     end

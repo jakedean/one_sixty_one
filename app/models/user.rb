@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   has_many :items
-  has_many :reactions
+  has_many :reactions, dependent: :destroy
   has_many :wants, dependent: :destroy
   has_many :personal_items, through: :wants, source: :item
   has_many :votes, dependent: :destroy
@@ -43,6 +43,9 @@ class User < ActiveRecord::Base
 
 
 
+  def feed
+    Want.from_users_followed_by(self)
+  end
 
   def add_item(item)
     self.wants.create(item_id: item.id)

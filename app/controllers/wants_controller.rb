@@ -9,10 +9,10 @@ class WantsController < ApplicationController
 		@want = current_user.wants.build(params[:want])
         if @want.save
           flash[:success] = "You added that item to your list"
-		  redirect_to school_user_path(@school, current_user)
+		  redirect_to user_path(current_user)
 		else
 		  flash[:error] = "You already have that on your list silly"
-		    redirect_to school_user_path(@school, current_user)
+		    redirect_to user_path(current_user)
 		end
 	end
 
@@ -26,6 +26,13 @@ class WantsController < ApplicationController
 	    	redirect_to :back
 	    end
 	end
+
+	def destroy
+		@want = Want.find(params[:id])
+		@want.destroy
+		redirect_to user_path(current_user)
+	end
+
 
 	def show
 		@want = Want.find(params[:id])

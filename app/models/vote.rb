@@ -19,4 +19,7 @@ class Vote < ActiveRecord::Base
   validates_uniqueness_of :user_id, scope: :item_id
   validates :user_id, presence: true
   validates :item_id, presence: true
+
+
+  scope :desc, order('wants.updated_at DESC')
 end

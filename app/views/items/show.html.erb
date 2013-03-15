@@ -11,8 +11,8 @@
 
 <div class="center hero-unit">
   <% @item.reactions.each do |c| %>
-  <p><% me = User.find(c.user_id) %></p>
-  <p><%= me.email %></p>
+  <% @user = User.find(c.user_id) %>
+  <p><%= @user.email %></p>
   <h1><%= c.comment %></h1>
   	<% end %>
     

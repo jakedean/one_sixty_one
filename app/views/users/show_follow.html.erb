@@ -4,7 +4,7 @@
     <section>
       <%= gravatar_for @user %>
       <h1><%= @user.name %></h1>
-      <span><%= link_to "view my profile", school_user_path(@school, @user) %></span>
+      <span><%= link_to "view my profile", user_path(@user) %></span>
       <span><b>Things they like:</b> <%= @user.wants.count %></span>
     </section>
     <section>
@@ -22,7 +22,9 @@
     <h3><%= @title %></h3>
     <% if @users.any? %>
       <ul class="users">
-        <%= render @users %>
+        <% @users.each do |user| %>
+
+        
       </ul>
       
     <% end %>

@@ -21,6 +21,8 @@
 
 </div>
 
+<% if current_user == @user %>
+
 <div class="span8 offset4">
 		<%= form_for @want, html: { multipart: true } do |f| %>
 		<%= render 'shared/error_messages', object: f.object %>
@@ -45,6 +47,8 @@
 		<% end %>
 	</div>
 </div>
+
+<% end %>
 
 <div class="span8 offset4">
 		<%= form_for [@want, @want.personals.build(user_id: current_user.id)] do |f| %>

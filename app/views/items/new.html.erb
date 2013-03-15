@@ -7,7 +7,7 @@
 <%= render 'shared/flashes' %>
 
 <div class="span8 offset4">
-		<%= form_for current_user.items.build(school_id: @school.id) do |f| %>
+		<%= form_for current_user.items.build(school_id: current_user.school_id) do |f| %>
 		<%= render 'shared/error_messages', object: f.object %>
 
 		<%= f.label :content %>
