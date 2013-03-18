@@ -35,7 +35,12 @@ class WantsController < ApplicationController
 
 
 	def show
-		@want = Want.find(params[:id])
-		@item = Item.find(@want.item_id)
+      @title = "My Items"
+      @user = User.find(params[:user_id])
+      @school = School.find(current_user.school_id)
+      @want = Want.find(params[:id])
+      @personal_item = Item.find(@want.item_id)
+      @personal = Personal.new
 	end
+	
 end

@@ -6,9 +6,9 @@ describe "UserPages" do
 	    let(:school) { FactoryGirl.create(:school) }
         let!(@user)  { school.users.create(name: 'jake Dean', email: 'jd@gmail.com',
     	                       password: 'foobar', password_confirmation: 'foobar') }
+      let!(@user_2)  { school.users.create(name: 'jake Dean', email: 'jdean74@gmail.com',
+                             password: 'foobar', password_confirmation: 'foobar') }
         let!(:item) { @user.items.create(content: "item", school_id: school.id) }
-
-        before { sign_in(@user) }
 
 
 	end
@@ -21,11 +21,11 @@ end
 
 
 describe "follow/unfollow buttons" do
-    let(:other_user) { FactoryGirl.create(:user) }
-    before { sign_in user }
+    
+    before { sign_in @user }
 
     describe "following a user" do
-      before { visit user_path(other_user) }
+      before { visit user_path(@user_2) }
 
       it " should increment the followed user count" do
         expect do
@@ -90,3 +90,24 @@ describe "index page" do
 
   it { should have_selector('title', text: 'All users') }
   it { should have_content('All users') }
+
+
+
+describe "feed actions" do
+  before do
+    sign_in @user
+    visit school_items_path(school)
+    click_link "item"
+    click_button "Add"
+    sign_out @user
+    sign _in @user_2
+    visit user_path(@user)
+    click_button "Follow"
+    click_link 'Recent Activity'
+  end
+
+  it { should have_content("#{@user.name}")}
+  it { should have_content('item') }
+end
+
+

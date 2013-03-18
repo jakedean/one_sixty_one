@@ -23,6 +23,7 @@ OneSixtyOne::Application.routes.draw do
     member do
         get :following, :followers, :personal_item, :feed
       end
+      resources :wants, only: :show
   end
   
   #again I can get to the school and user from current_user here so i do not need nesting

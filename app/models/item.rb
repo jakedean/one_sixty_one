@@ -13,7 +13,7 @@
 #
 
 class Item < ActiveRecord::Base
-  attr_accessible :content, :counter, :school_id
+  attr_accessible :content, :school_id
 
   has_many :reactions
   has_many :wants

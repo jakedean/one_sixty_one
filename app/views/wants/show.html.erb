@@ -1,1 +1,66 @@
-<%= @item.content %>
+<div class="center hero-unit">
+<%= @personal_item.content %>
+
+</div>
+
+
+<div class="center hero-unit">
+
+<%= image_tag(@want.picture.url) %>
+
+
+<% @want.personals.each do |personal_comment| %>
+
+<% the_user = User.find(personal_comment.user_id) %>
+<%= the_user.email %>
+<%= personal_comment.content %></br>
+
+<% end %>
+
+</div>
+
+<% if current_user == @user %>
+
+<div class="span8 offset4">
+		<%= form_for @want, html: { multipart: true } do |f| %>
+		<%= render 'shared/error_messages', object: f.object %>
+
+
+        <% if @want.picture.blank? %>
+
+		  <%= f.file_field :picture %>
+
+		  <%= f.check_box(:status) %>
+          <%= f.label :status, "I did it!" %>
+
+        <% else %>
+
+          <%= f.check_box(:status) %>
+          <%= f.label :status, "I did it!" %>
+        <% end %>
+
+
+		<%= f.submit "Submit!", class: 'btn btn-large btn-primary' %>
+
+		<% end %>
+	</div>
+</div>
+
+<% end %>
+
+<div class="span8 offset4">
+		<%= form_for [@want, @want.personals.build(user_id: current_user.id)] do |f| %>
+		<%= render 'shared/error_messages', object: f.object %>
+
+		<%= f.label :content %>
+		<%= f.text_field :content %>
+
+		<%= f.hidden_field :user_id %>
+
+		<%= f.submit "Add your comment!", class: 'btn btn-large btn-primary' %>
+		<% end %>
+	</div>
+</div>
+
+
+
