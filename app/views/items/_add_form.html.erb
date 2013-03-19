@@ -1,5 +1,5 @@
 <%= form_for [@item, current_user.wants.build(item_id: @item.id)] do |f| %>
 
   <div><%= f.hidden_field :item_id %></div>
-  <%= f.submit "Add", class: 'btn btn-large btn-primary' %>
+  <%= image_submit_tag('glyphicons_190_circle_plus.png') %> 
   <% end %>

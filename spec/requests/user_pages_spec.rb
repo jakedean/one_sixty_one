@@ -90,7 +90,7 @@ describe "index page" do
 
   it { should have_selector('title', text: 'All users') }
   it { should have_content('All users') }
-
+end
 
 
 describe "feed actions" do
@@ -109,5 +109,5 @@ describe "feed actions" do
   it { should have_content("#{@user.name}")}
   it { should have_content('item') }
 end
-
+end
 

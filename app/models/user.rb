@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   has_many :followed_users, through: :relationships, source: :followed
   has_many :reverse_relationships, foreign_key: 'followed_id', class_name: "Relationship", dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
-  has_attached_file :picture, styles: { small: "300x300", icon: "100x100" }, default_url: "missing.png", :path => "images/:id/:style_:basename.:extension"
+  has_attached_file :picture, styles: { small: "300x300", tile: "50x50", icon: "100x100" }, default_url: '/images/:style/missing.png'
 
   before_save { |user| user.email = user.email.downcase }
   before_save :create_remember_token
@@ -40,6 +40,7 @@ class User < ActiveRecord::Base
                                     uniqueness: { case_sensative: false }
    validates :password, presence: true, length: { minimum: 6 }
    validates :password_confirmation, presence: true
+   #validates :picture, size: { in: 0..30.kilobytes }
 
 
 

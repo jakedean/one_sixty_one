@@ -16,6 +16,19 @@
   <% @items.desc.each do |item| %>
   <% @user = User.find(item.user_id) %>
      <p>Posted By: <%= @user.email %> <%= pluralize(item.counter, "vote") %></p>
+     
+     <%= form_for [item, current_user.votes.build(item_id: item.id)] do |f| %>
+       <div><%= f.hidden_field :item_id %></div>
+       <%= image_submit_tag('glyphicons_343_thumbs_up.png') %> 
+     <% end %>
+
+     <%= form_for [item, current_user.wants.build(item_id: item.id)] do |f| %>
+
+     <div><%= f.hidden_field :item_id %></div>
+       <%= image_submit_tag('glyphicons_190_circle_plus.png') %> 
+     <% end %>
+
+
     <h1><%= link_to item.content, item_path(item) %></h1>
   <% end %>
 </div>

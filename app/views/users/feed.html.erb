@@ -1,31 +1,37 @@
 
 <div class="center hero-unit">
-  
     <h1>Recent Activity</h1>
+</div>
+
+    <div class="center hero-unit">
+  
 
   <ul><% @combo_ordered.each do |recent_item| %>
 
   	
     <% if recent_item.class == Vote %>
-       <li><% user = User.find(recent_item.user_id) %>
+       <% user = User.find(recent_item.user_id) %>
+        <%= image_tag user.picture.url(:icon) %>
   	   <%= link_to "#{user.name} +1'd this item >>", user_path(user)  %>
   	   <% item = Item.find(recent_item.item_id) %>
-  	   <%= link_to "#{item.content}", item_path(item) %></li>
-       <li><%= "Updated #{time_ago_in_words(recent_item.updated_at)} ago" %></li><br>
+  	   <%= link_to "#{item.content}", item_path(item) %>
+       <%= "Updated #{time_ago_in_words(recent_item.updated_at)} ago" %></br>
     <% else %>
-  	  <li><% user = User.find(recent_item.user_id) %>
+  	  <% user = User.find(recent_item.user_id) %>
   	  <% if recent_item.created_at == recent_item.updated_at %>
+         <%= image_tag user.picture.url(:icon) %>
   	     <%= link_to "#{user.name} added to personal list >>", user_path(user)  %>
   	     <% item = Item.find(recent_item.item_id) %>
   	     <% want = user.wants.find_by_item_id(item) %>
-  	     <%= link_to "#{item.content}", item_path(item) %></li>
-         <li><%= "Updated #{time_ago_in_words(recent_item.updated_at)} ago" %></li><br>
+  	     <%= link_to "#{item.content}", item_path(item) %>
+         <%= "Updated #{time_ago_in_words(recent_item.updated_at)} ago" %></br>
       <% else %>
+        <%= image_tag user.picture.url(:icon) %>
   	    <%= link_to "#{user.name} updated >> ", user_path(user)  %>
   	    <% item = Item.find(recent_item.item_id) %>
   	     <% want = user.wants.find_by_item_id(item) %>
-  	     <%= link_to "#{item.content}", personal_item_user_path(user, want) %></li>
-         <li><%= "Updated #{time_ago_in_words(recent_item.updated_at)} ago" %></li><br>
+  	     <%= link_to "#{item.content}", personal_item_user_path(user, want) %>
+         <%= "Updated #{time_ago_in_words(recent_item.updated_at)} ago" %></br>
   	  <% end %>
      
   <% end %>

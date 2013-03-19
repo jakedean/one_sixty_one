@@ -37,6 +37,6 @@ OneSixtyOne::Application.configure do
 
   #For use of paperclip
 
-  Paperclip.options[:command_path] = "/usr/local/bin/convert"
+  Paperclip.options[:command_path] = '/usr/local/bin'
 
 end
